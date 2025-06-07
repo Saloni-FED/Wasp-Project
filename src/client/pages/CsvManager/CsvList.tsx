@@ -46,7 +46,7 @@ const CsvList: React.FC<CsvListProps> = ({ onBackToImportStep1 }) => {
                 <h2 className="text-xl font-bold">Uploaded CSV Files</h2>
                 {onBackToImportStep1 && (
                   <button
-                    className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition"
+                    className="bg-black text-white px-6 py-2 rounded transition-colors duration-200 hover:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-black focus:ring-offset-2 shadow"
                     onClick={onBackToImportStep1}
                   >
                     + Import New CSV
@@ -87,27 +87,28 @@ const CsvList: React.FC<CsvListProps> = ({ onBackToImportStep1 }) => {
                                                 <Trash2 className="inline w-4 h-4" />
                                             </button>
                                         </DialogTrigger>
-                                        <DialogContent>
+                                        <DialogContent className="w-full max-w-xs sm:max-w-md px-4 py-6">
                                             <DialogHeader>
-                                                <DialogTitle>Delete CSV File</DialogTitle>
-                                                <DialogDescription>
-                                                    Are you sure you want to delete <span className="font-semibold">{file.originalName}</span>? This action cannot be undone.
+                                                <DialogTitle className="text-base sm:text-lg text-center">Delete CSV File</DialogTitle>
+                                                <DialogDescription className="text-center text-sm mb-4">
+                                                    Are you sure you want to delete <span className="font-semibold">{file.originalName}</span>?<br />
+                                                    This action cannot be undone.
                                                 </DialogDescription>
                                             </DialogHeader>
-                                            <DialogFooter>
+                                            <DialogFooter className="flex flex-col gap-2 mt-6">
                                                 <button
-                                                    className="px-4 py-2 rounded bg-gray-200 hover:bg-gray-300"
-                                                    onClick={() => setDialogOpenId(null)}
-                                                    disabled={deletingId === file.id}
-                                                >
-                                                    Cancel
-                                                </button>
-                                                <button
-                                                    className="px-4 py-2 rounded bg-red-600 text-white hover:bg-red-700"
+                                                    className="w-full px-4 py-2 rounded bg-red-600 text-white font-semibold hover:bg-red-700 transition"
                                                     onClick={() => handleDelete(file.id)}
                                                     disabled={deletingId === file.id}
                                                 >
                                                     {deletingId === file.id ? 'Deleting...' : 'Delete'}
+                                                </button>
+                                                <button
+                                                    className="w-full px-4 py-2 rounded bg-gray-100 text-gray-900 font-semibold hover:bg-gray-200 transition"
+                                                    onClick={() => setDialogOpenId(null)}
+                                                    disabled={deletingId === file.id}
+                                                >
+                                                    Cancel
                                                 </button>
                                             </DialogFooter>
                                         </DialogContent>

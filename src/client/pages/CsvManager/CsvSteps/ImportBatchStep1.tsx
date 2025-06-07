@@ -5,19 +5,22 @@ interface ImportBatchStep1Props {
   initialBatchType?: 'Company' | 'People'
   initialFile?: File | null
   onContinue: (data: { batchName: string, batchType: 'Company' | 'People', file: File }) => void
+  onViewCsvList?: () => void
 }
 
 const ImportBatchStep1: React.FC<ImportBatchStep1Props> = ({
   initialBatchName = '',
   initialBatchType = 'Company',
   initialFile = null,
-  onContinue
+  onContinue,
+  onViewCsvList
 }) => {
   const [batchName, setBatchName] = useState(initialBatchName)
   const [batchType, setBatchType] = useState<'Company' | 'People'>(initialBatchType)
   const [file, setFile] = useState<File | null>(initialFile)
   const fileInputRef = useRef<HTMLInputElement>(null)
   const [dragActive, setDragActive] = useState(false)
+  const [showFileList, setShowFileList] = useState(false)
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
@@ -242,6 +245,18 @@ const ImportBatchStep1: React.FC<ImportBatchStep1Props> = ({
           Continue
         </button>
       </div>
+
+      {onViewCsvList && (
+        <div className="flex justify-end mt-8">
+          <button
+            type="button"
+            className="bg-black text-white px-6 py-2 rounded transition-colors duration-200 hover:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-black focus:ring-offset-2 shadow"
+            onClick={onViewCsvList}
+          >
+            View Uploaded CSVs
+          </button>
+        </div>
+      )}
     </div>
   )
 }

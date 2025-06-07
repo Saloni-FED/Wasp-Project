@@ -9,6 +9,13 @@ import ImportBatchStep4 from './CsvSteps/ImportBatchStep4';
 import { uploadCsv } from 'wasp/client/operations';
 import  CsvList from './CsvList'
 
+interface CsvFile {
+  id: string;
+  originalName: string;
+  uploadedAt: string;
+  rowCount: number;
+}
+
 const CsvFileUpload: React.FC = () => {
   // Stepper state
   const [step, setStep] = useState(1);
@@ -113,6 +120,7 @@ const CsvFileUpload: React.FC = () => {
           initialBatchType={batchType}
           initialFile={file}
           onContinue={handleStep1Continue}
+          onViewCsvList={() => setShowFileList(true)}
         />
         {parseError && <div className="text-red-500 text-center mt-4">{parseError}</div>}
       </>
