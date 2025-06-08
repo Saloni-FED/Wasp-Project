@@ -14,7 +14,7 @@ A modern web app for uploading, managing, and editing CSV files, built with Wasp
 
 ---
 
-## Demo Of Csv Manager
+## Demo Of CSV Manager
 
 [Demo Video](https://drive.google.com/file/d/1-WLUNm2ekAM6ZIXeJ79qj0Sr0wAmcPoP/view?usp=sharing)
 
