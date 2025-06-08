@@ -35,7 +35,8 @@ export const uploadCsv = async (rawArgs: any, context: any) => {
       throw new HttpError(400, "CSV file is empty or invalid")
     }
 
-    const columnHeaders = Object.keys(records[0] || {})
+    // Ensure columnHeaders is always a string[] and contains only strings
+    const columnHeaders = Object.keys(records[0] || {}).filter((h): h is string => typeof h === 'string')
     const rowCount = records.length
 
     // Apply field mapping to transform data
@@ -194,6 +195,46 @@ export const getCsvData = async (args: { fileId: string; page?: number; limit?: 
     take: limit,
   })
 
+  // Compute insights
+  const totalRows = rows.length
+  const columnHeaders = csvFile.columnHeaders || []
+  const insights: Record<string, any> = { totalRows, columns: {} }
+
+  // Helper functions for type detection
+  const isNumber = (val: string) => /^-?\d+(\.\d+)?$/.test(val)
+  const isDate = (val: string) => !isNaN(Date.parse(val))
+  const isEmail = (val: string) => /^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(val)
+
+  for (const header of columnHeaders) {
+    const values = rows.map(r => r.rowData?.[header] ?? '').filter(v => v !== '' && v !== undefined && v !== null)
+    const sample = values.slice(0, 50)
+    let type = 'text'
+    if (sample.length > 0) {
+      if (sample.every(isNumber)) type = 'number'
+      else if (sample.every(isDate)) type = 'date'
+      else if (sample.every(isEmail)) type = 'email'
+    }
+    const uniqueValues = Array.from(new Set(values))
+    const valueCounts: Record<string, number> = {}
+    for (const v of values) {
+      valueCounts[v] = (valueCounts[v] || 0) + 1
+    }
+    let mostCommonValue: string | null | number = null
+    let mostCommonCount = 0
+    for (const [val, count] of Object.entries(valueCounts)) {
+      if (count > mostCommonCount) {
+        mostCommonValue = val
+        mostCommonCount = count
+      }
+    }
+    insights.columns[header] = {
+      uniqueCount: uniqueValues.length,
+      mostCommonValue,
+      empty: values.length === 0,
+      type,
+    }
+  }
+
   return {
     csvFile,
     rows,
@@ -203,6 +244,7 @@ export const getCsvData = async (args: { fileId: string; page?: number; limit?: 
       total: csvFile.rowCount,
       totalPages: Math.ceil(csvFile.rowCount / limit),
     },
+    insights,
   }
 }
 

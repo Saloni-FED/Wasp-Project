@@ -16,6 +16,10 @@ interface CsvListProps {
   onBackToImportStep1?: () => void
 }
 
+/**
+ * CsvList component displays all uploaded CSV files in a table.
+ * Allows users to view, delete, and interact with their files.
+ */
 const CsvList: React.FC<CsvListProps> = ({ onBackToImportStep1 }) => {
     const { data: files, isLoading, error, refetch } = useQuery(getUserCsvFiles)
     const [selectedFileId, setSelectedFileId] = useState<string | null>(null)

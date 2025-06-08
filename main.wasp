@@ -93,7 +93,13 @@ app OpenSaaS {
       email: "me@example.com"
     },
   },
+  
+   server: {
+    middlewareConfigFn: import { serverMiddlewareFn } from "@src/server/middleware"
+  }
+ 
 }
+
 
 route LandingPageRoute { path: "/", to: LandingPage }
 page LandingPage {
@@ -359,4 +365,8 @@ query getCsvData {
 action updateCsvCell {
   fn: import { updateCsvCell } from "@src/server/csvManager/operation",
   entities: [User, CsvFile, CsvRow] // adjust entities as needed
+}
+
+action csvManager {
+ fn : import { serverSetup } from "@src/server/serverSetup"
 }
