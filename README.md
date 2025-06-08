@@ -16,7 +16,7 @@ A modern web app for uploading, managing, and editing CSV files, built with Wasp
 
 ## Demo
 
-[![Demo Video](https://drive.google.com/file/d/1-WLUNm2ekAM6ZIXeJ79qj0Sr0wAmcPoP/view?usp=sharing)](YOUR_DEMO_VIDEO_LINK_HERE)
+[![Demo Video](https://drive.google.com/file/d/1-WLUNm2ekAM6ZIXeJ79qj0Sr0wAmcPoP/view?usp=sharing)](https://drive.google.com/file/d/1-WLUNm2ekAM6ZIXeJ79qj0Sr0wAmcPoP/view?usp=sharing))
 
 ---
 
