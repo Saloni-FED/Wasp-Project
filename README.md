@@ -46,11 +46,12 @@ A modern web app for uploading, managing, and editing CSV files, built with Wasp
 ## Technical Approach
 
 ### Key Architectural Decisions
-
+- Check Technical_Approach.md for Documentation
 - **Wasp Framework**: Chosen for its full-stack capabilities and rapid prototyping with React, Prisma, and Node.js.
 - **Component Structure**: The app uses a stepper pattern for CSV import, with each step as a separate React component for clarity and reusability.
 - **State Management**: React hooks (`useState`, `useEffect`) manage local state, while Wasp actions/queries handle server communication and data fetching.
 - **UI/UX**: shadcn/ui and Tailwind CSS provide a modern, accessible, and responsive interface. Dialogs are used for confirmations and modals.
+
 
 ### Challenges & Solutions
 
